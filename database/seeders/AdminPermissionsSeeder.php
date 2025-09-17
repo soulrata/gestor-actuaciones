@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminPermissionsSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class AdminPermissionsSeeder extends Seeder
             // Create Admin Role
             $adminRole = Role::firstOrCreate([
                 'name' => 'Administrador',
-                'guard_name' => 'web'
+                'guard_name' => 'web',
             ]);
 
             // Create Permissions
@@ -39,10 +39,10 @@ class AdminPermissionsSeeder extends Seeder
                 [
                     'name' => 'Admin',
                     'email' => 'admin@example.com',
-                    'password' => bcrypt('password')
+                    'password' => bcrypt('password'),
                 ]
             );
-            
+
             $user->assignRole($adminRole);
         });
     }

@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserRoleController;
+use Illuminate\Support\Facades\Route;
 
 Route::resource('permissions', PermissionController::class)->except('show');
 Route::resource('roles', RoleController::class);

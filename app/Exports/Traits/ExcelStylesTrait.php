@@ -2,10 +2,10 @@
 
 namespace App\Exports\Traits;
 
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 trait ExcelStylesTrait
 {
@@ -17,8 +17,8 @@ trait ExcelStylesTrait
         // Obtener el rango total de la hoja
         $highestColumn = $sheet->getHighestColumn();
         $highestRow = $sheet->getHighestRow();
-        $range = 'A1:' . $highestColumn . $highestRow;
-        
+        $range = 'A1:'.$highestColumn.$highestRow;
+
         // Estilos para los encabezados (fila 1)
         $headerStyle = [
             'font' => [
@@ -41,7 +41,7 @@ trait ExcelStylesTrait
                 ],
             ],
         ];
-        
+
         // Estilos para el contenido (resto de filas)
         $contentStyle = [
             'borders' => [
@@ -56,21 +56,21 @@ trait ExcelStylesTrait
         ];
 
         // Aplicar estilos
-        $sheet->getStyle('A1:' . $highestColumn . '1')->applyFromArray($headerStyle);
-        
+        $sheet->getStyle('A1:'.$highestColumn.'1')->applyFromArray($headerStyle);
+
         // Solo aplicar estilos de contenido si hay más de una fila
         if ($highestRow > 1) {
-            $sheet->getStyle('A2:' . $highestColumn . $highestRow)->applyFromArray($contentStyle);
+            $sheet->getStyle('A2:'.$highestColumn.$highestRow)->applyFromArray($contentStyle);
         }
-        
+
         // Ajustar el ancho de las columnas automáticamente
         foreach (range('A', $highestColumn) as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
-        
+
         // Configurar altura de la fila de encabezados
         $sheet->getRowDimension(1)->setRowHeight(25);
-        
+
         return [];
     }
 }

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
     public function index()
     {
         $permissions = Permission::paginate(10);
+
         return view('admin.permissions.index', compact('permissions'));
     }
 
@@ -23,6 +24,7 @@ class PermissionController extends Controller
     {
         $validated = $request->validate(['name' => 'required|unique:permissions|max:255']);
         Permission::create($validated);
+
         return redirect()->route('admin.permissions.index')->with('success', 'Permiso creado correctamente');
     }
 
@@ -35,12 +37,14 @@ class PermissionController extends Controller
     {
         $validated = $request->validate(['name' => 'required|max:255|unique:permissions,name,'.$permission->id]);
         $permission->update($validated);
+
         return redirect()->route('admin.permissions.index')->with('success', 'Permiso actualizado');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
+
         return redirect()->route('admin.permissions.index')->with('success', 'Permiso eliminado');
     }
 }

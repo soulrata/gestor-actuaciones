@@ -3,21 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
     public function index()
     {
         $roles = Role::with('permissions')->paginate(10);
+
         return view('admin.roles.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
+
         return view('admin.roles.create', compact('permissions'));
     }
 
@@ -25,7 +27,7 @@ class RoleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|unique:roles,name',
-            'permissions' => 'array|exists:permissions,name'
+            'permissions' => 'array|exists:permissions,name',
         ]);
 
         $role = Role::create($validated);
@@ -37,6 +39,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
+
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
@@ -44,7 +47,7 @@ class RoleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|unique:roles,name,'.$role->id,
-            'permissions' => 'array|exists:permissions,name'
+            'permissions' => 'array|exists:permissions,name',
         ]);
 
         $role->update($validated);
@@ -56,6 +59,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
+
         return redirect()->route('admin.roles.index')->with('success', 'Rol eliminado exitosamente');
     }
 }
