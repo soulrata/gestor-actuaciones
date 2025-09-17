@@ -34,12 +34,12 @@
         ],
         'Gestor de ecosistemas' => [
             [
-                'name' => 'Areas',
+                'name' => 'Ecosistema',
                 'icon' => 'building-office',
-                // 'routes' => route('admin.areas.index'),
-                // 'current' => request()->routeIs('admin.areas.*'),
-                'routes' => '#',
-                'current' => false,
+                'routes' => route('admin.ecosistema.index'),
+                'current' => request()->routeIs('admin.ecosistema.*'),
+                // 'routes' => '#',
+                // 'current' => false,
                 'can' => 'Gestor de ecosistemas',
             ],
             [

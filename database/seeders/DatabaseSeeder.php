@@ -37,9 +37,10 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('✅ Usuarios base creados');
 
-        // Ejecutar seeder de permisos y roles
+        // Ejecutar seeder de permisos, roles y ecosistema base
         $this->call([
             AdminPermissionsSeeder::class,
+            EcosistemaSeeder::class,
         ]);
 
         $this->command->info('🎉 Seeders completados exitosamente');

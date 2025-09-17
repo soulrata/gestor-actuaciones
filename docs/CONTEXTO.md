@@ -180,3 +180,44 @@ Configura el entorno de producción (servidor web, base de datos de producción)
 Sube el código al servidor.
 Ejecuta los comandos de despliegue: composer install --no-dev, php artisan optimize, php artisan migrate --force.
 Una vez completadas estas fases, tendrás el backend y la administración completamente funcionales. El siguiente gran paso sería el desarrollo del frontend (la SPA en Vue.js) que se conectará a la API que has construido.
+
+---
+
+🗃️ Fase 1: Construcción del Esquema de la Base de Datos
+Hito 1.1: Generar las migraciones para las tablas principales ejecutando los comandos php artisan make:migration para: roles, ecosistemas, flujos_trabajo, estados, actuaciones, transiciones, historial_actuaciones, permisos_lectura, ecosistema_administrador.
+Hito 1.2: Definir la estructura de columnas y relaciones (foreign keys) en el archivo de migración de actuaciones (incluyendo estado_id, asignado_id, flujo_trabajo_id).
+Hito 1.3: Definir la estructura de columnas y relaciones en el resto de archivos de migración (siguiendo el diseño acordado).
+Hito 1.4: Ejecutar todas las migraciones con php artisan migrate y verificar que todas las tablas se crearon correctamente en la base de datos actuaciones_db.
+Hito 1.5: Generar los modelos Eloquent para cada tabla (Rol, Ecosistema, FlujoTrabajo, Estado, Actuacion, Transicion, HistorialActuacion, PermisoLectura, EcosistemaAdministrador) usando php artisan make:model.
+Hito 1.6: Definir las relaciones Eloquent (belongsTo, hasMany, belongsToMany, etc.) dentro de cada modelo.
+⚙️ Fase 2: Lógica de Negocio y Autenticación
+Hito 2.1: Instalar y configurar Laravel Sanctum para autenticación de API: composer require laravel/sanctum y seguir los pasos de configuración oficial.
+Hito 2.2: Crear la carpeta app/Services y dentro, el archivo ServicioFlujoTrabajo.php.
+Hito 2.3: Implementar el método realizarTransicion() en ServicioFlujoTrabajo.php con la lógica de validación de roles, campos obligatorios y cambio de estado.
+Hito 2.4: Definir las rutas API en routes/api.php para gestionar actuaciones (GET, POST, PUT, DELETE).
+Hito 2.5: Crear el controlador Api/ActuacionController con php artisan make:controller Api/ActuacionController --api.
+Hito 2.6: Implementar los métodos del controlador (index, store, show, update, destroy) para interactuar con el servicio y devolver respuestas JSON.
+Hito 2.7: Crear una ruta y un controlador para la página "Selector de Rol" (ej: RoleSelectionController).
+Hito 2.8: Modificar el flujo de login para que, tras autenticar, redirija al usuario a la página principal si tiene un solo rol, o al selector de rol si tiene múltiples roles.
+🖥️ Fase 3: Panel de Administración
+Hito 3.1: Elegir e instalar una herramienta de administración (Filament o Laravel Nova) siguiendo su guía oficial de instalación.
+Hito 3.2: Crear el recurso de administración para Ecosistema (CRUD completo).
+Hito 3.3: Crear el recurso de administración para Rol (CRUD completo).
+Hito 3.4: Crear el recurso de administración para FlujoTrabajo (CRUD completo).
+Hito 3.5: Crear el recurso de administración para Estado (CRUD completo).
+Hito 3.6: Crear el recurso de administración para Transicion, con una interfaz visual que permita seleccionar el estado origen, destino y el rol responsable desde listas desplegables.
+Hito 3.7: Crear el recurso de administración para Usuario (gestión de roles y asignación a ecosistemas).
+Hito 3.8: Crear el recurso de administración para EcosistemaAdministrador (asignar administradores a ecosistemas).
+Hito 3.9: Usar el panel de administración para crear el primer ecosistema de prueba (ej: "Recursos Humanos").
+Hito 3.10: Configurar el primer flujo de trabajo en el panel (ej: "Solicitud de Vacaciones": Agente → Revisor → Firmante → Agente).
+🔄 Fase 4: Migración de Datos y Despliegue
+Hito 4.1: Crear un comando Artisan personalizado: php artisan make:command MigrarDatosSheets.
+Hito 4.2: Implementar la lógica en el comando MigrarDatosSheets para leer un archivo CSV y mapear sus datos a los modelos Eloquent, insertándolos en la base de datos.
+Hito 4.3: Preparar el archivo CSV de prueba con datos reales (o de ejemplo) para validar la migración.
+Hito 4.4: Ejecutar el comando de migración en el entorno local: php artisan app:migrar-datos-sheets y verificar que los datos se cargaron correctamente.
+Hito 4.5: Configurar el entorno de producción (servidor, base de datos, variables de entorno).
+Hito 4.6: Subir el código fuente al servidor de producción (vía Git, FTP, o el método elegido).
+Hito 4.7: Ejecutar en producción: composer install --no-dev para instalar dependencias.
+Hito 4.8: Ejecutar en producción: php artisan migrate --force para crear las tablas.
+Hito 4.9: Ejecutar en producción: php artisan optimize para optimizar el rendimiento.
+Hito 4.10: Ejecutar el comando de migración de datos en producción para cargar los datos reales.
