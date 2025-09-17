@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         // Ejecutar seeder de permisos, roles y ecosistema base
         $this->call([
             AdminPermissionsSeeder::class,
+            RoutePermissionsSeeder::class,
             EcosistemaSeeder::class,
         ]);
 

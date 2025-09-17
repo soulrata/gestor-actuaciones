@@ -1,3 +1,8 @@
+2025-09-17
+- Añadido endpoint GET /debug/permissions para retornar JSON con la lista de permisos (id, name, guard_name). Sólo accesible a usuarios con rol `SuperAdmin`.
+- Ruta implementada en `routes/web.php` y protegida con middleware `auth` + chequeo de rol.
+- Seeder `RoutePermissionsSeeder` creado previamente para automatizar la creación de permisos usados por el sidebar.
+- Se recomienda ejecutar `php artisan db:seed` si necesitás crear los permisos en una instalación nueva.
 ### Los Pilares de la Arquitectura del Sistema
 #### 1. Motor de Flujos de Trabajo Dinámico (Ecosistemas) 🌐
 Esta es la mejora más importante. La lógica de negocio deja de estar "quemada" en el código y pasa a ser completamente configurable desde un panel de administración.

@@ -16,7 +16,7 @@ class UpdateEcosistemaRequest extends FormRequest
         $ecosistemaId = $this->route('ecosistema')->id ?? null;
 
         return [
-            'nombre' => 'required|string|max:255|unique:ecosistemas,nombre,' . $ecosistemaId,
+            'nombre' => 'required|string|max:255|unique:ecosistemas,nombre,'.$ecosistemaId,
             'descripcion' => 'nullable|string',
         ];
     }

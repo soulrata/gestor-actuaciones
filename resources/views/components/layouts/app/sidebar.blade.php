@@ -1,55 +1,154 @@
 @php
     $groups = [
+        // 📊 Dashboard
         'Dashboard' => [
             [
-                'name' => 'Dashboard',
+                'name' => 'Dashboard General',
                 'icon' => 'home',
                 'routes' => route('dashboard'),
                 'current' => request()->routeIs('dashboard'),
-                'can' => 'Dashboard',
+                'can' => 'dashboard.general',
             ],
         ],
-        'Gestor de usuarios' => [
+
+        // 👑 Gestión Global del Sistema (SOLO SUPER ADMIN)
+        'Gestión Global del Sistema' => [
             [
-                'name' => 'Permisos',
-                'icon' => 'key',
-                'routes' => route('admin.permissions.index'),
-                'current' => request()->routeIs('admin.permissions.*'),
-                'can' => 'Gestor de usuarios',
-            ],
-            [
-                'name' => 'Roles',
-                'icon' => 'user',
-                'routes' => route('admin.roles.index'),
-                'current' => request()->routeIs('admin.roles.*'),
-                'can' => 'Gestor de usuarios',
-            ],
-            [
-                'name' => 'Asignación de Rol',
+                'name' => 'Gestor de Usuarios',
                 'icon' => 'users',
-                'routes' => route('admin.user-roles.index'),
-                'current' => request()->routeIs('admin.user-roles.*'),
-                'can' => 'Gestor de usuarios',
-            ],
-        ],
-        'Gestor de ecosistemas' => [
-            [
-                'name' => 'Ecosistema',
-                'icon' => 'building-office',
-                'routes' => route('admin.ecosistema.index'),
-                'current' => request()->routeIs('admin.ecosistema.*'),
-                // 'routes' => '#',
-                // 'current' => false,
-                'can' => 'Gestor de ecosistemas',
-            ],
-            [
-                'name' => 'Proyectos',
-                'icon' => 'folder',
-                // 'routes' => route('admin.projects.index'),
-                // 'current' => request()->routeIs('admin.projects.*'),
                 'routes' => '#',
                 'current' => false,
-                'can' => 'Gestor de ecosistemas',
+                'can' => 'system.users.manage',
+            ],
+            [
+                'name' => 'Asignar SuperAdmin',
+                'icon' => 'shield-check',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'system.users.assign_superadmin',
+            ],
+            [
+                'name' => 'Asignar Admin de Ecosistema',
+                'icon' => 'building-office',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'system.users.assign_admin_ecosistema',
+            ],
+            [
+                'name' => 'Asignar Roles Operativos',
+                'icon' => 'wrench',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'system.users.assign_operational_roles',
+            ],
+            [
+                'name' => 'Gestor de Roles y Permisos',
+                'icon' => 'key',
+                'routes' => route('admin.roles.index'),
+                'current' => request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*'),
+                'can' => 'system.roles.manage',
+            ],
+        ],
+
+        // 🏢 Mi Ecosistema (PARA ADMIN DE ECOSISTEMA y USUARIOS)
+        'Mi Ecosistema' => [
+            // 📥 Bandeja de Entrada
+            [
+                'name' => 'Actuaciones asignadas a mí',
+                'icon' => 'inbox',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.inbox.assigned',
+            ],
+            [
+                'name' => 'Actuaciones equipo',
+                'icon' => 'users',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.inbox.team',
+            ],
+            [
+                'name' => 'Actuaciones vencidas / próximas',
+                'icon' => 'exclamation-triangle',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.inbox.due',
+            ],
+
+            // 📂 Seguimiento de Actuaciones
+            [
+                'name' => 'Buscador de Actuaciones',
+                'icon' => 'magnifying-glass',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.search',
+            ],
+            [
+                'name' => 'Historial completo',
+                'icon' => 'clock',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.history',
+            ],
+            [
+                'name' => 'Reportes / Exportar',
+                'icon' => 'document-text',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.reports',
+            ],
+
+            // 🛠️ Diseño de Flujos
+            [
+                'name' => 'Tipos de Actuación',
+                'icon' => 'table-cells',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.types',
+            ],
+            [
+                'name' => 'Diseñador de Flujos',
+                'icon' => 'puzzle-piece',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.designer',
+            ],
+            [
+                'name' => 'Gestor de Estados',
+                'icon' => 'rectangle-stack',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.states',
+            ],
+            [
+                'name' => 'Gestor de Transiciones',
+                'icon' => 'arrow-path',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.transitions',
+            ],
+
+            // 👥 Gestión de Mi Equipo
+            [
+                'name' => 'Asignar roles en mi ecosistema',
+                'icon' => 'user-plus',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.team.assign_roles',
+            ],
+            [
+                'name' => 'Usuarios del Ecosistema',
+                'icon' => 'users',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.team.list',
+            ],
+            [
+                'name' => 'Invitar usuario',
+                'icon' => 'envelope',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.team.invite',
             ],
         ],
     ];

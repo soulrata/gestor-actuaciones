@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEcosistemaRequest;
 use App\Http\Requests\UpdateEcosistemaRequest;
 use App\Models\Ecosistema;
-use Illuminate\Http\Request;
 
 class EcosistemaController extends Controller
 {
