@@ -16,30 +16,16 @@
             [
                 'name' => 'Gestor de Usuarios',
                 'icon' => 'users',
-                'routes' => '#',
-                'current' => false,
+                'routes' => route('admin.users.index'),
+                'current' => request()->routeIs('admin.users.*'),
                 'can' => 'system.users.manage',
             ],
             [
-                'name' => 'Asignar SuperAdmin',
+                'name' => 'Gestor de Ecosistema',
                 'icon' => 'shield-check',
-                'routes' => '#',
+                'routes' => route('admin.ecosistema.index'),
                 'current' => false,
-                'can' => 'system.users.assign_superadmin',
-            ],
-            [
-                'name' => 'Asignar Admin de Ecosistema',
-                'icon' => 'building-office',
-                'routes' => '#',
-                'current' => false,
-                'can' => 'system.users.assign_admin_ecosistema',
-            ],
-            [
-                'name' => 'Asignar Roles Operativos',
-                'icon' => 'wrench',
-                'routes' => '#',
-                'current' => false,
-                'can' => 'system.users.assign_operational_roles',
+                'can' => 'Gestor de Ecosistema',
             ],
             [
                 'name' => 'Gestor de Roles y Permisos',
@@ -51,7 +37,7 @@
         ],
 
         // 🏢 Mi Ecosistema (PARA ADMIN DE ECOSISTEMA y USUARIOS)
-        'Mi Ecosistema' => [
+        'Bandeja de Entrada' => [
             // 📥 Bandeja de Entrada
             [
                 'name' => 'Actuaciones asignadas a mí',

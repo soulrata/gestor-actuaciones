@@ -1,4 +1,11 @@
 2025-09-17
+
+- Limpieza: `UpdateUserRequest.php` sobrescrito para eliminar definiciones duplicadas que causaban errores de compilación.
+- Validación: `StoreUserRequest.php` verificado; reglas de validación y authorize presentes.
+- Controlador: `UserController` actualizado para hashear contraseñas en create/update y sincronizar roles.
+- Vistas: CRUD de usuarios (index/create/edit/show/_form) adaptadas para usar `<x-layouts.app>`, modo oscuro y componentes Flux; columna "Rol" añadida.
+- Estado actual: compilación PHP limpia respecto a los errores por clases duplicadas; quedan por añadir tests de Feature/Unit para cubrir create/update/validación/autorización.
+2025-09-17
 - Añadido endpoint GET /debug/permissions para retornar JSON con la lista de permisos (id, name, guard_name). Sólo accesible a usuarios con rol `SuperAdmin`.
 - Ruta implementada en `routes/web.php` y protegida con middleware `auth` + chequeo de rol.
 - Seeder `RoutePermissionsSeeder` creado previamente para automatizar la creación de permisos usados por el sidebar.

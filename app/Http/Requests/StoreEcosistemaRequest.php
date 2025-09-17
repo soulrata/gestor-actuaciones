@@ -8,7 +8,10 @@ class StoreEcosistemaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->can('Gestor de ecosistemas');
+        /** @var \App\Models\User|null $user */
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        return $user && $user->can('Gestor de ecosistemas');
     }
 
     public function rules(): array

@@ -5,10 +5,12 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Ecosistema;
 
 class User extends Authenticatable
 {
@@ -26,6 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'ecosistema_id',
     ];
 
     /**
@@ -68,5 +71,13 @@ class User extends Authenticatable
     public function importacionesRespuesta(): HasMany
     {
         return $this->hasMany(ImportacionRespuesta::class);
+    }
+
+    /**
+     * The ecosistema this user belongs to (nullable for SuperAdmin).
+     */
+    public function ecosistema(): BelongsTo
+    {
+        return $this->belongsTo(Ecosistema::class);
     }
 }

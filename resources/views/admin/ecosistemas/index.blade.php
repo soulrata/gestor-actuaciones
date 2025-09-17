@@ -1,7 +1,5 @@
 <x-layouts.app>
-@php
-    use Illuminate\Support\Str;
-@endphp
+
     <div class="mb-8 flex justify-between items-center">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item :href="route('dashboard')">Dashboard</flux:breadcrumbs.item>

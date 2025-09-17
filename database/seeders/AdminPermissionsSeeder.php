@@ -26,7 +26,7 @@ class AdminPermissionsSeeder extends Seeder
 
                 // System management
                 ['name' => 'system.users.manage', 'guard_name' => 'web'],
-                ['name' => 'system.users.assign_superadmin', 'guard_name' => 'web'],
+                ['name' => 'Gestor de Ecosistema', 'guard_name' => 'web'],
                 ['name' => 'system.users.assign_admin_ecosistema', 'guard_name' => 'web'],
                 ['name' => 'system.users.assign_operational_roles', 'guard_name' => 'web'],
                 ['name' => 'system.roles.manage', 'guard_name' => 'web'],

@@ -11,7 +11,9 @@ it('allows superadmin to view permissions', function () {
     $user = User::factory()->create();
     $user->assignRole($role);
 
-    actingAs($user)->get('/debug/permissions')->assertOk()->assertJsonStructure([['id', 'name', 'guard_name']]);
+    actingAs($user)->get('/debug/permissions')->assertOk()->assertJsonStructure([
+        '*' => ['id', 'name', 'guard_name'],
+    ]);
 });
 
 it('forbids regular user from viewing permissions', function () {

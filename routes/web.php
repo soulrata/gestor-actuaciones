@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Debug route to list permissions (only SuperAdmin)
 Route::get('/debug/permissions', function () {
+    /** @var \App\Models\User|null $user */
     $user = \Illuminate\Support\Facades\Auth::user();
 
     if (! $user || ! $user->hasRole('SuperAdmin')) {

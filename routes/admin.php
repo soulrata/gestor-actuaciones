@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Route;
 Route::resource('permissions', PermissionController::class)->except('show');
 Route::resource('roles', RoleController::class);
 
+// User management
+use App\Http\Controllers\Admin\UserController;
+
+Route::resource('users', UserController::class);
+
 // CRUD de Ecosistemas
 Route::resource('ecosistema', EcosistemaController::class)->names('ecosistema');
 
