@@ -61,3 +61,122 @@ Escalabilidad: La plataforma está diseñada para crecer junto con la organizaci
 
 ---
 
+Plan de Implementación Detallado
+
+
+Fase 0: Preparación del Entorno de Desarrollo (Fundamentos)
+
+El objetivo de esta fase es tener un proyecto Laravel limpio y listo para empezar a construir.
+1. Instalar Herramientas Requeridas:
+PHP (versión compatible con Laravel 12).
+Composer (para gestionar las dependencias de PHP).
+Node.js y npm (para las herramientas de frontend).
+Un servidor de base de datos MySQL (o MariaDB).
+Un cliente de base de datos (como DBeaver o TablePlus).
+2. Crear el Proyecto Laravel:
+En tu terminal, ejecuta: composer create-project laravel/laravel sistema_actuaciones
+Esto creará una nueva carpeta sistema_actuaciones con la última versión de Laravel.
+3. Configuración Inicial (Framework):
+Conexión a la Base de Datos: Abre el archivo .env en la raíz del proyecto. Configura las credenciales de tu base de datos local:
+Fragmento de código
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=actuaciones_db
+DB_USERNAME=root
+DB_PASSWORD=tu_contraseña
+
+
+Crear la Base de Datos (Base de Datos): Usando tu cliente de base de datos, crea una nueva base de datos vacía llamada actuaciones_db.
+4. Control de Versiones:
+Inicializa un repositorio de Git en la carpeta del proyecto (git init). Realiza el primer commit para guardar el estado inicial.
+
+Fase 1: Construcción del Esquema de la Base de Datos
+
+Aquí creamos el esqueleto de nuestra base de datos usando las "migraciones" de Laravel, que son como un control de versiones para la estructura de la base de datos.
+1. Crear las Migraciones (Framework):
+Ejecuta los siguientes comandos de Artisan en tu terminal. Laravel creará un archivo de migración para cada tabla en la carpeta database/migrations/.
+Bash
+php artisan make:migration create_roles_table
+php artisan make:migration create_ecosistemas_table
+php artisan make:migration create_flujos_trabajo_table
+php artisan make:migration create_estados_table
+php artisan make:migration create_actuaciones_table
+php artisan make:migration create_transiciones_table
+php artisan make:migration create_historial_actuaciones_table
+php artisan make:migration create_permisos_lectura_table
+php artisan make:migration create_ecosistema_administrador_table
+
+
+Laravel ya incluye una migración para la tabla users.
+2. Definir las Columnas y Relaciones (Base de Datos):
+Abre cada uno de los archivos de migración generados y define las columnas y claves foráneas que diseñamos. Por ejemplo, para create_actuaciones_table:
+PHP
+// database/migrations/xxxx_xx_xx_xxxxxx_create_actuaciones_table.php
+Schema::create('actuaciones', function (Blueprint $table) {
+    $table->id();
+    $table->string('numero_expediente')->unique();
+    $table->string('motivo');
+    // ... otras columnas ...
+    $table->foreignId('estado_id')->constrained('estados');
+    $table->foreignId('asignado_id')->constrained('usuarios');
+    $table->foreignId('flujo_trabajo_id')->constrained('flujos_trabajo');
+    $table->timestamps();
+    $table->timestamp('cerrado_en')->nullable();
+});
+
+
+3. Ejecutar las Migraciones (Base de Datos):
+Una vez definidas todas las migraciones, ejecuta: php artisan migrate
+Este comando creará todas las tablas y relaciones en tu base de datos actuaciones_db.
+4. Crear los Modelos (Framework):
+Crea un modelo Eloquent para cada tabla. Esto le permite a Laravel interactuar con tus tablas de forma orientada a objetos.
+Bash
+php artisan make:model Rol
+php artisan make:model Ecosistema
+php artisan make:model FlujoTrabajo
+// ... y así para cada tabla ...
+
+
+Dentro de cada archivo de modelo (en app/Models/), define las relaciones (ej: belongsTo, hasMany).
+
+Fase 2: Lógica de Negocio y Autenticación
+
+Con la base de datos lista, construimos el cerebro de la aplicación.
+1. Configurar Autenticación para SPA (Framework):
+Instala y configura Laravel Sanctum para manejar la autenticación de forma segura entre el backend y el frontend. composer require laravel/sanctum
+2. Crear el ServicioFlujoTrabajo (Framework):
+Crea una carpeta app/Services y dentro, el archivo ServicioFlujoTrabajo.php.
+Programa el método realizarTransicion() que contendrá la lógica principal para verificar y ejecutar los cambios de estado.
+3. Desarrollar la API (Framework):
+Define las rutas en routes/api.php (ej: GET /actuaciones, PUT /actuaciones/{id}).
+Crea el ActuacionController (php artisan make:controller Api/ActuacionController --api).
+Implementa los métodos del controlador, que recibirán las peticiones, llamarán al ServicioFlujoTrabajo y devolverán las respuestas en formato JSON.
+4. Implementar el Selector de Rol (Framework):
+Crea una ruta y un controlador para la página "Seleccionar Rol".
+Modifica el sistema de login para que, después de una autenticación exitosa, verifique la cantidad de roles del usuario y lo redirija a la página principal o al selector de rol según corresponda.
+
+Fase 3: Panel de Administración
+
+Esta es la interfaz que te permitirá configurar los flujos sin tocar código.
+1. Elegir e Instalar una Herramienta de Administración (Framework):
+Opciones recomendadas: Filament (gratuito y muy potente) o Laravel Nova (oficial, de pago).
+Sigue las instrucciones de instalación de la herramienta elegida.
+2. Crear los "Recursos" de Administración (Framework):
+Configura un CRUD (Crear, Leer, Actualizar, Borrar) para cada modelo clave: Ecosistemas, Usuarios, Roles, Flujos de Trabajo, Estados y, fundamentalmente, Transiciones.
+Esta interfaz debe ser muy visual e intuitiva, permitiendo a un administrador crear un flujo completo seleccionando estados y roles de listas desplegables.
+3. Cargar el Flujo Inicial (Base de Datos):
+Usando el panel de administración recién creado, configura el primer "Ecosistema" y mapea el flujo de trabajo actual (el que describiste: Agente -> Revisor -> Firmante -> Agente).
+
+Fase 4: Migración de Datos y Despliegue
+
+1. Crear el Script de Migración (Framework):
+Crea un comando de Artisan personalizado: php artisan make:command MigrarDatosSheets
+Dentro de este comando, programa la lógica para leer los datos desde un archivo CSV (exportado desde Google Sheets) y, usando los modelos de Eloquent, insertarlos en las nuevas tablas de MySQL, mapeando los antiguos valores a los nuevos IDs.
+2. Ejecutar la Migración (Base de Datos):
+Corre el comando php artisan app:migrar-datos-sheets. Este es un paso único y crucial que se realiza antes de la puesta en marcha.
+3. Preparar para Despliegue (Framework):
+Configura el entorno de producción (servidor web, base de datos de producción).
+Sube el código al servidor.
+Ejecuta los comandos de despliegue: composer install --no-dev, php artisan optimize, php artisan migrate --force.
+Una vez completadas estas fases, tendrás el backend y la administración completamente funcionales. El siguiente gran paso sería el desarrollo del frontend (la SPA en Vue.js) que se conectará a la API que has construido.
