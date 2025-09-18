@@ -120,15 +120,15 @@
             [
                 'name' => 'Usuarios',
                 'icon' => 'users',
-                'routes' => '#',
-                'current' => false,
+                'routes' => route('ecosystem.users.index'),
+                'current' => request()->routeIs('ecosystem.users.*'),
                 'can' => 'Usuarios del Ecosistema', //Listar usuarios de propio ecosistema
             ],
             [
                 'name' => 'Roles y Permisos',
                 'icon' => 'user-plus',
-                'routes' => '#',
-                'current' => false,
+                'routes' => route('ecosystem.roles.index'),
+                'current' => request()->routeIs('ecosystem.roles.*'),
                 'can' => 'Roles y Permisos del Ecosistema', //Gestor roles de propio ecosistema
             ],
         ],
