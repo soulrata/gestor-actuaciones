@@ -24,7 +24,7 @@
                 'name' => 'Gestor de Ecosistema',
                 'icon' => 'building-library',
                 'routes' => route('admin.ecosistema.index'),
-                'current' => false,
+                'current' => request()->routeIs('admin.ecosistema.*'),
                 'can' => 'Gestor SuperAdmin',
             ],
             [
