@@ -66,14 +66,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the importaciones de respuesta made by this user
-     */
-    public function importacionesRespuesta(): HasMany
-    {
-        return $this->hasMany(ImportacionRespuesta::class);
-    }
-
-    /**
      * The ecosistema this user belongs to (nullable for SuperAdmin).
      */
     public function ecosistema(): BelongsTo

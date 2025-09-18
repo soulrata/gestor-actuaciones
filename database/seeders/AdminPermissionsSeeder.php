@@ -22,14 +22,10 @@ class AdminPermissionsSeeder extends Seeder
             // Define permission slugs used by the sidebar and system
             $permissionSlugs = [
                 // Dashboard
-                ['name' => 'dashboard.general', 'guard_name' => 'web'],
+                ['name' => 'Dashboard', 'guard_name' => 'web'],
 
-                // System management
-                ['name' => 'system.users.manage', 'guard_name' => 'web'],
-                ['name' => 'Gestor de Ecosistema', 'guard_name' => 'web'],
-                ['name' => 'system.users.assign_admin_ecosistema', 'guard_name' => 'web'],
-                ['name' => 'system.users.assign_operational_roles', 'guard_name' => 'web'],
-                ['name' => 'system.roles.manage', 'guard_name' => 'web'],
+                // Gestor SuperAdmin
+                ['name' => 'Gestor SuperAdmin', 'guard_name' => 'web'],
 
                 // Ecosystem inbox / tracking
                 ['name' => 'ecosystem.inbox.assigned', 'guard_name' => 'web'],
