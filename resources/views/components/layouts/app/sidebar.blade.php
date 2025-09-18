@@ -3,7 +3,7 @@
         // 📊 Dashboard
         'Dashboard' => [
             [
-                'name' => 'Dashboard General',
+                'name' => 'Métricas',
                 'icon' => 'home',
                 'routes' => route('dashboard'),
                 'current' => request()->routeIs('dashboard'),
