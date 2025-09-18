@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class EcosystemUserController extends Controller
@@ -61,6 +62,16 @@ class EcosystemUserController extends Controller
             abort(403, 'Debes estar asignado a un ecosistema.');
         }
 
+        // DEBUG: Mostrar datos del request
+        Log::info('=== ECOSYSTEM USER STORE DEBUG ===');
+        Log::info('Current User ID: ' . $currentUser->id);
+        Log::info('Current User Ecosistema ID: ' . $currentUser->ecosistema_id);
+        Log::info('Request Name: ' . $request->input('name'));
+        Log::info('Request Email: ' . $request->input('email'));
+        Log::info('Request Password: ' . ($request->input('password') ? '[PRESENTE]' : '[AUSENTE]'));
+        Log::info('Request Roles: ' . json_encode($request->input('roles')));
+        Log::info('Request All Data: ' . json_encode($request->except(['password', 'password_confirmation'])));
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -69,22 +80,46 @@ class EcosystemUserController extends Controller
             'roles.*' => 'exists:roles,name',
         ]);
 
+        Log::info('Validation passed successfully');
+
         // Verificar que no se asigne rol SuperAdmin
         if (in_array('SuperAdmin', $request->roles)) {
+            Log::info('Blocked: Trying to assign SuperAdmin role');
             abort(403, 'No puedes asignar el rol SuperAdmin.');
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'ecosistema_id' => $currentUser->ecosistema_id, // Asignar al mismo ecosistema
-        ]);
+        Log::info('Creating user with data:');
+        Log::info('- Name: ' . $request->name);
+        Log::info('- Email: ' . $request->email);
+        Log::info('- Ecosistema ID: ' . $currentUser->ecosistema_id);
 
-        $user->assignRole($request->roles);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'ecosistema_id' => $currentUser->ecosistema_id, // Asignar al mismo ecosistema
+            ]);
 
-        return redirect()->route('ecosystem.users.index')
-            ->with('success', 'Usuario creado exitosamente.');
+            Log::info('User created successfully with ID: ' . $user->id);
+
+            $user->assignRole($request->roles);
+            Log::info('Roles assigned: ' . json_encode($request->roles));
+
+            Log::info('=== END USER STORE DEBUG ===');
+
+            return redirect()->route('ecosystem.users.index')
+                ->with('success', 'Usuario creado exitosamente.');
+
+        } catch (\Exception $e) {
+            Log::error('Error creating user: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            Log::info('=== END USER STORE DEBUG (ERROR) ===');
+            
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Error al crear usuario: ' . $e->getMessage());
+        }
     }
 
     /**

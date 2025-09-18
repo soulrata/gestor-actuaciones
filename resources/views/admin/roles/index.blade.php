@@ -2,7 +2,7 @@
     <div class="mb-8 flex justify-between items-center">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item :href="route('dashboard')">
-                Dashboard
+                Gestor SuperAdmin
             </flux:breadcrumbs.item>
             <flux:breadcrumbs.item>
                 Roles

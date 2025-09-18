@@ -1,10 +1,20 @@
 <x-layouts.app.sidebar>
     <flux:main class="min-h-screen">
-        <flux:header class="bg-white dark:bg-zinc-900 shadow-sm">
-            <flux:heading size="xl">Crear Nuevo Rol</flux:heading>
-        </flux:header>
-
         <div class="p-6">
+            <div class="mb-8 flex justify-between items-center">
+                <flux:breadcrumbs>
+                    <flux:breadcrumbs.item :href="route('dashboard')">
+                        Gestor de mi Equipo
+                    </flux:breadcrumbs.item>
+                    <flux:breadcrumbs.item :href="route('ecosystem.roles.index')">
+                        Roles y Permisos del Ecosistema
+                    </flux:breadcrumbs.item>
+                    <flux:breadcrumbs.item>
+                        Crear Rol
+                    </flux:breadcrumbs.item>
+                </flux:breadcrumbs>
+            </div>
+
             <div class="bg-white dark:bg-zinc-900 rounded-lg shadow">
                 <div class="p-6 border-b border-zinc-200 dark:border-zinc-700">
                     <flux:heading size="lg">Datos del Rol</flux:heading>

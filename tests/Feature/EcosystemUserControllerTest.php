@@ -20,7 +20,7 @@ beforeEach(function () {
     $this->superAdmin = User::factory()->create(['ecosistema_id' => null]);
     $this->superAdmin->assignRole('SuperAdmin');
     
-    $this->ecosystemAdmin1 = User::factory()->create(['ecosistema_id' => null]);
+    $this->ecosystemAdmin1 = User::factory()->create(['ecosistema_id' => null]); // Sin ecosistema para testing
     $this->ecosystemAdmin1->assignRole('Admin del Ecosistema');
     
     $this->normalUser1 = User::factory()->create(['ecosistema_id' => null]);
@@ -33,8 +33,8 @@ it('blocks unauthorized users', function () {
         ->assertForbidden();
 });
 
-it('redirects authenticated ecosystem admin', function () {
+it('blocks users without ecosystem', function () {
     $this->actingAs($this->ecosystemAdmin1)
         ->get(route('ecosystem.users.index'))
-        ->assertStatus(302); // Redirect due to missing ecosistema_id validation
+        ->assertForbidden(); // Should fail because ecosistema_id constraint
 });

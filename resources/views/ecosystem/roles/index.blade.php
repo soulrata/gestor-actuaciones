@@ -1,17 +1,24 @@
 <x-layouts.app.sidebar>
     <flux:main class="min-h-screen">
-        <flux:header class="bg-white dark:bg-zinc-900 shadow-sm">
-            <flux:heading size="xl">Roles y Permisos del Ecosistema</flux:heading>
-            <flux:spacer />
-            <flux:button href="{{ route('ecosystem.roles.create') }}" icon="plus" variant="primary">
-                Nuevo Rol
-            </flux:button>
-        </flux:header>
-
         <div class="p-6">
+            <div class="mb-8 flex justify-between items-center">
+                <flux:breadcrumbs>
+                    <flux:breadcrumbs.item :href="route('dashboard')">
+                        Gestor de mi Equipo
+                    </flux:breadcrumbs.item>
+                    <flux:breadcrumbs.item>
+                        Roles y Permisos del Ecosistema
+                    </flux:breadcrumbs.item>
+                </flux:breadcrumbs>
+
+                <flux:button :href="route('ecosystem.roles.create')" variant="primary" size="sm">
+                    Nuevo Rol
+                </flux:button>
+            </div>
+
             <div class="bg-white dark:bg-zinc-900 rounded-lg shadow">
                 <div class="p-6 border-b border-zinc-200 dark:border-zinc-700">
-                    <flux:heading size="lg">Lista de Roles</flux:heading>
+                    <flux:heading size="lg">Roles y Permisos del Ecosistema</flux:heading>
                     <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">Gestiona los roles y permisos de tu ecosistema</p>
                 </div>
 

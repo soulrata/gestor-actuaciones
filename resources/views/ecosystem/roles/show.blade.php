@@ -1,19 +1,30 @@
 <x-layouts.app.sidebar>
     <flux:main class="min-h-screen">
-        <flux:header class="bg-white dark:bg-zinc-900 shadow-sm">
-            <flux:heading size="xl">Rol: {{ $role->name }}</flux:heading>
-            <flux:spacer />
-            <div class="flex flex-wrap gap-2">
-                <flux:button href="{{ route('ecosystem.roles.edit', $role) }}" icon="pencil" variant="primary">
-                    Editar Rol
-                </flux:button>
-                <flux:button href="{{ route('ecosystem.roles.index') }}" variant="ghost">
-                    Volver a Lista
-                </flux:button>
-            </div>
-        </flux:header>
+        <div class="p-6">
+            <div class="mb-8 flex justify-between items-center">
+                <flux:breadcrumbs>
+                    <flux:breadcrumbs.item :href="route('dashboard')">
+                        Gestor de mi Equipo
+                    </flux:breadcrumbs.item>
+                    <flux:breadcrumbs.item :href="route('ecosystem.roles.index')">
+                        Roles y Permisos del Ecosistema
+                    </flux:breadcrumbs.item>
+                    <flux:breadcrumbs.item>
+                        Ver: {{ $role->name }}
+                    </flux:breadcrumbs.item>
+                </flux:breadcrumbs>
 
-        <div class="p-6 space-y-6">
+                <div class="flex flex-wrap gap-2">
+                    <flux:button :href="route('ecosystem.roles.edit', $role)" variant="primary" size="sm">
+                        Editar Rol
+                    </flux:button>
+                    <flux:button :href="route('ecosystem.roles.index')" variant="ghost" size="sm">
+                        Volver a Lista
+                    </flux:button>
+                </div>
+            </div>
+
+            <div class="space-y-6">
             <!-- Información del Rol -->
             <div class="bg-white dark:bg-zinc-900 rounded-lg shadow">
                 <div class="p-6 border-b border-zinc-200 dark:border-zinc-700">

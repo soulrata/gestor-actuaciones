@@ -1,7 +1,7 @@
 <x-layouts.app>
     <div class="mb-8 flex justify-between items-center">
         <flux:breadcrumbs>
-            <flux:breadcrumbs.item :href="route('dashboard')">Dashboard</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>Gestor SuperAdmin</flux:breadcrumbs.item>
             <flux:breadcrumbs.item :href="route('admin.users.index')">Usuarios</flux:breadcrumbs.item>
             <flux:breadcrumbs.item>Editar</flux:breadcrumbs.item>
         </flux:breadcrumbs>
