@@ -37,7 +37,7 @@
             </div>
 
             <div class="flex justify-end">
-                <flux:button type="submit" variant="primary">Crear Rol</flux:button>
+                <flux:button type="submit" variant="primary" size="sm">Crear Rol</flux:button>
             </div>
         </form>
     </div>

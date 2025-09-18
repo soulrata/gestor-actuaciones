@@ -11,25 +11,11 @@ class RoutePermissionsSeeder extends Seeder
     public function run(): void
     {
         $perms = [
-            'dashboard.general',
-            'system.users.manage',
-            'system.users.assign_superadmin',
-            'system.users.assign_admin_ecosistema',
-            'system.users.assign_operational_roles',
-            'system.roles.manage',
-            'ecosystem.inbox.assigned',
-            'ecosystem.inbox.team',
-            'ecosystem.inbox.due',
-            'ecosystem.tracking.search',
-            'ecosystem.tracking.history',
-            'ecosystem.tracking.reports',
-            'ecosystem.flows.types',
-            'ecosystem.flows.designer',
-            'ecosystem.flows.states',
-            'ecosystem.flows.transitions',
-            'ecosystem.team.assign_roles',
-            'ecosystem.team.list',
-            'ecosystem.team.invite',
+            'Dashboard',
+            'Gestor SuperAdmin',
+            'Diseñador de Secuencias',
+            'Usuarios del Ecosistema',
+            'Roles y Permisos del Ecosistema',
         ];
 
         foreach ($perms as $p) {

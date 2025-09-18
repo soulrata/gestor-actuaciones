@@ -37,104 +37,99 @@
         ],
 
         // 🏢 Mi Ecosistema (PARA ADMIN DE ECOSISTEMA y USUARIOS)
-        (auth()->user()->ecosystem?->name ?? 'Bandeja de Entrada') => [
+        'Panel ' .( auth()->user()?->ecosistema?->nombre ?? 'de trabajo') => [
             // 📥 Bandeja de Entrada
             [
-            'name' => 'Bandeja de Entrada', //Actuaciones asignadas a mí
-            'icon' => 'inbox',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.inbox.assigned',
+                'name' => 'Bandeja de Entrada', //Actuaciones asignadas a mí
+                'icon' => 'inbox',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'Bandeja de Entrada',
             ],
             [
-            'name' => 'Actuaciones equipo',
-            'icon' => 'users',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.inbox.team',
+                'name' => 'Actuaciones equipo',
+                'icon' => 'users',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.inbox.team',
             ],
             [
-            'name' => 'Actuaciones vencidas / próximas',
-            'icon' => 'exclamation-triangle',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.inbox.due',
+                'name' => 'Actuaciones vencidas / próximas',
+                'icon' => 'exclamation-triangle',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.inbox.due',
             ],
 
             // 📂 Seguimiento de Actuaciones
             [
-            'name' => 'Buscador de Actuaciones',
-            'icon' => 'magnifying-glass',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.tracking.search',
+                'name' => 'Buscador de Actuaciones',
+                'icon' => 'magnifying-glass',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.search',
             ],
             [
-            'name' => 'Historial completo',
-            'icon' => 'clock',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.tracking.history',
+                'name' => 'Historial completo',
+                'icon' => 'clock',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.history',
             ],
             [
-            'name' => 'Reportes / Exportar',
-            'icon' => 'document-text',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.tracking.reports',
+                'name' => 'Reportes / Exportar',
+                'icon' => 'document-text',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.tracking.reports',
             ],
-
-            // 🛠️ Diseño de Flujos
+        ],
+        // 🛠️ Diseño de Secuencias
+        'Diseño de Secuencias' => [
             [
-            'name' => 'Tipos de Actuación',
-            'icon' => 'table-cells',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.flows.types',
-            ],
-            [
-            'name' => 'Diseñador de Flujos',
-            'icon' => 'puzzle-piece',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.flows.designer',
+                'name' => 'Tipos de Actuación',
+                'icon' => 'table-cells',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.types',
             ],
             [
-            'name' => 'Gestor de Estados',
-            'icon' => 'rectangle-stack',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.flows.states',
+                'name' => 'Diseñador de Secuencias',
+                'icon' => 'puzzle-piece',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'Diseñador de Secuencias',
             ],
             [
-            'name' => 'Gestor de Transiciones',
-            'icon' => 'arrow-path',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.flows.transitions',
-            ],
-
-            // 👥 Gestión de Mi Equipo
-            [
-            'name' => 'Asignar roles en mi ecosistema',
-            'icon' => 'user-plus',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.team.assign_roles',
+                'name' => 'Gestor de Estados',
+                'icon' => 'rectangle-stack',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.states',
             ],
             [
-            'name' => 'Usuarios del Ecosistema',
-            'icon' => 'users',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.team.list',
+                'name' => 'Gestor de Transiciones',
+                'icon' => 'arrow-path',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.transitions',
+            ],
+        ],
+        // 👥 Gestión de Mi Equipo
+        'Gestión de Mi Equipo' => [
+            [
+                'name' => 'Usuarios',
+                'icon' => 'users',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'Usuarios del Ecosistema', //Listar usuarios de propio ecosistema
             ],
             [
-            'name' => 'Invitar usuario',
-            'icon' => 'envelope',
-            'routes' => '#',
-            'current' => false,
-            'can' => 'ecosystem.team.invite',
+                'name' => 'Roles y Permisos',
+                'icon' => 'user-plus',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'Roles y Permisos del Ecosistema', //Gestor roles de propio ecosistema
             ],
         ],
     ];
@@ -146,6 +141,7 @@
 <head>
     @include('partials.head')
 </head>
+
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
@@ -159,7 +155,11 @@
                 @php
                     $hasPermission = false;
                     foreach ($items as $item) {
-                        if (auth()->user()->can($item['can'] ?? null)) {
+                        if (
+                            auth()
+                                ->user()
+                                ->can($item['can'] ?? null)
+                        ) {
                             $hasPermission = true;
                             break;
                         }
@@ -170,8 +170,8 @@
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($items as $item)
                             @canany($item['can'] ?? [null])
-                                <flux:navlist.item :icon="$item['icon']" :href="$item['routes']" :current="$item['current']"
-                                    wire:navigate>
+                                <flux:navlist.item :icon="$item['icon']" :href="$item['routes']"
+                                    :current="$item['current']" wire:navigate>
                                     {{ $item['name'] }}
                                 </flux:navlist.item>
                             @endcanany
@@ -286,7 +286,7 @@
 
     {{ $slot }}
 
-    @fluxScripts    
+    @fluxScripts
 </body>
 
 </html>

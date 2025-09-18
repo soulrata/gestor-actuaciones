@@ -11,11 +11,11 @@
 - Seeder `RoutePermissionsSeeder` creado previamente para automatizar la creación de permisos usados por el sidebar.
 - Se recomienda ejecutar `php artisan db:seed` si necesitás crear los permisos en una instalación nueva.
 ### Los Pilares de la Arquitectura del Sistema
-#### 1. Motor de Flujos de Trabajo Dinámico (Ecosistemas) 🌐
+#### 1. Motor de secuencias de Trabajo Dinámico (Ecosistemas) 🌐
 Esta es la mejora más importante. La lógica de negocio deja de estar "quemada" en el código y pasa a ser completamente configurable desde un panel de administración.
-Ecosistemas: La plataforma permitirá crear "Ecosistemas" o áreas de trabajo independientes (ej: "Área Legal", "Área Administrativa"). Cada una tendrá sus propios usuarios, flujos y reglas.
-Flujos Configurables: Un administrador de cada ecosistema podrá diseñar visualmente el ciclo de vida de una actuación: definir los estados (ej: "En Revisión Legal", "Aprobado por Gerencia"), y las transiciones (quién puede mover un caso de un estado a otro y bajo qué condiciones).
-Flexibilidad por Tipo de Actuación: Se podrán crear distintos flujos para diferentes tipos de actuación dentro del mismo ecosistema. Un trámite simple puede tener 3 pasos, mientras que uno complejo puede tener 7, todo configurable sin necesidad de un programador.
+Ecosistemas: La plataforma permitirá crear "Ecosistemas" o áreas de trabajo independientes (ej: "Área Legal", "Área Administrativa"). Cada una tendrá sus propios usuarios, secuencias y reglas.
+secuencias Configurables: Un administrador de cada ecosistema podrá diseñar visualmente el ciclo de vida de una actuación: definir los estados (ej: "En Revisión Legal", "Aprobado por Gerencia"), y las transiciones (quién puede mover un caso de un estado a otro y bajo qué condiciones).
+Flexibilidad por Tipo de Actuación: Se podrán crear distintos secuencias para diferentes tipos de actuación dentro del mismo ecosistema. Un trámite simple puede tener 3 pasos, mientras que uno complejo puede tener 7, todo configurable sin necesidad de un programador.
 #### 2. Gestión de Roles y Permisos Granulares 🔐
 El manejo de usuarios se vuelve mucho más sofisticado y seguro.
 Roles Ilimitados y Configurables: Un administrador podrá crear, modificar o eliminar roles ("Agente", "Revisor", "Auditor", etc.) según las necesidades de la organización.
@@ -24,7 +24,7 @@ Roles de "Solo Lectura": Se podrán crear roles de consulta para gerentes, direc
 #### 3. Administración Delegada y Jerárquica 🧑‍💼
 Se establece una estructura de gobierno clara que fomenta la autonomía y la seguridad.
 Superadministrador: Tendrá control total sobre la plataforma, incluyendo la creación de Ecosistemas y la asignación de sus administradores.
-Administrador de Ecosistema: Cada área tendrá su propio administrador, quien gestionará los usuarios, roles y flujos de trabajo únicamente de su ecosistema. Esto descentraliza la gestión y da autonomía a cada departamento para adaptar el sistema a sus necesidades.
+Administrador de Ecosistema: Cada área tendrá su propio administrador, quien gestionará los usuarios, roles y secuencias de trabajo únicamente de su ecosistema. Esto descentraliza la gestión y da autonomía a cada departamento para adaptar el sistema a sus necesidades.
 #### 4. Modernización Tecnológica y de Usuario ✨
 La experiencia de uso y la base tecnológica darán un salto cualitativo.
 Plataforma Robusta: Usar Laravel y MySQL nos da un sistema más rápido, seguro y capaz de manejar un volumen mucho mayor de datos y usuarios.
@@ -41,9 +41,9 @@ Nuevo Sistema (Plataforma Laravel)
 Lógica de Negocio
 Rígida, programada en el código.
 Flexible, configurable en la base de datos.
-Flujos de Trabajo
-Un único flujo para todos.
-Múltiples flujos por "Ecosistema" y tipo de actuación.
+secuencias de Trabajo
+Un único secuencia para todos.
+Múltiples secuencias por "Ecosistema" y tipo de actuación.
 Gestión de Roles
 Limitada. Requiere un programador para cambios.
 Ilimitada. Un administrador crea y modifica roles.
@@ -67,7 +67,7 @@ Alta, preparada para el crecimiento de la organización.
 
 Beneficios Clave
 Agilidad: La organización podrá adaptar sus procesos de negocio rápidamente sin depender de ciclos de desarrollo de software.
-Autonomía: Cada área o "Ecosistema" gestiona sus propios flujos y usuarios.
+Autonomía: Cada área o "Ecosistema" gestiona sus propios secuencias y usuarios.
 Seguridad: El acceso granular, el selector de roles y el control centralizado aumentan la seguridad de los datos.
 Escalabilidad: La plataforma está diseñada para crecer junto con la organización, soportando más usuarios, más áreas y procesos más complejos sin problemas.
 
@@ -111,7 +111,7 @@ Ejecuta los siguientes comandos de Artisan en tu terminal. Laravel creará un ar
 Bash
 php artisan make:migration create_roles_table
 php artisan make:migration create_ecosistemas_table
-php artisan make:migration create_flujos_trabajo_table
+php artisan make:migration create_secuencias_trabajo_table
 php artisan make:migration create_estados_table
 php artisan make:migration create_actuaciones_table
 php artisan make:migration create_transiciones_table
@@ -132,7 +132,7 @@ Schema::create('actuaciones', function (Blueprint $table) {
     // ... otras columnas ...
     $table->foreignId('estado_id')->constrained('estados');
     $table->foreignId('asignado_id')->constrained('usuarios');
-    $table->foreignId('flujo_trabajo_id')->constrained('flujos_trabajo');
+    $table->foreignId('secuencia_trabajo_id')->constrained('secuencias_trabajo');
     $table->timestamps();
     $table->timestamp('cerrado_en')->nullable();
 });
@@ -146,7 +146,7 @@ Crea un modelo Eloquent para cada tabla. Esto le permite a Laravel interactuar c
 Bash
 php artisan make:model Rol
 php artisan make:model Ecosistema
-php artisan make:model FlujoTrabajo
+php artisan make:model secuenciaTrabajo
 // ... y así para cada tabla ...
 
 
@@ -157,28 +157,28 @@ Fase 2: Lógica de Negocio y Autenticación
 Con la base de datos lista, construimos el cerebro de la aplicación.
 1. Configurar Autenticación para SPA (Framework):
 Instala y configura Laravel Sanctum para manejar la autenticación de forma segura entre el backend y el frontend. composer require laravel/sanctum
-2. Crear el ServicioFlujoTrabajo (Framework):
-Crea una carpeta app/Services y dentro, el archivo ServicioFlujoTrabajo.php.
+2. Crear el ServiciosecuenciaTrabajo (Framework):
+Crea una carpeta app/Services y dentro, el archivo ServiciosecuenciaTrabajo.php.
 Programa el método realizarTransicion() que contendrá la lógica principal para verificar y ejecutar los cambios de estado.
 3. Desarrollar la API (Framework):
 Define las rutas en routes/api.php (ej: GET /actuaciones, PUT /actuaciones/{id}).
 Crea el ActuacionController (php artisan make:controller Api/ActuacionController --api).
-Implementa los métodos del controlador, que recibirán las peticiones, llamarán al ServicioFlujoTrabajo y devolverán las respuestas en formato JSON.
+Implementa los métodos del controlador, que recibirán las peticiones, llamarán al ServiciosecuenciaTrabajo y devolverán las respuestas en formato JSON.
 4. Implementar el Selector de Rol (Framework):
 Crea una ruta y un controlador para la página "Seleccionar Rol".
 Modifica el sistema de login para que, después de una autenticación exitosa, verifique la cantidad de roles del usuario y lo redirija a la página principal o al selector de rol según corresponda.
 
 Fase 3: Panel de Administración
 
-Esta es la interfaz que te permitirá configurar los flujos sin tocar código.
+Esta es la interfaz que te permitirá configurar los secuencias sin tocar código.
 1. Elegir e Instalar una Herramienta de Administración (Framework):
 Opciones recomendadas: Filament (gratuito y muy potente) o Laravel Nova (oficial, de pago).
 Sigue las instrucciones de instalación de la herramienta elegida.
 2. Crear los "Recursos" de Administración (Framework):
-Configura un CRUD (Crear, Leer, Actualizar, Borrar) para cada modelo clave: Ecosistemas, Usuarios, Roles, Flujos de Trabajo, Estados y, fundamentalmente, Transiciones.
-Esta interfaz debe ser muy visual e intuitiva, permitiendo a un administrador crear un flujo completo seleccionando estados y roles de listas desplegables.
-3. Cargar el Flujo Inicial (Base de Datos):
-Usando el panel de administración recién creado, configura el primer "Ecosistema" y mapea el flujo de trabajo actual (el que describiste: Agente -> Revisor -> Firmante -> Agente).
+Configura un CRUD (Crear, Leer, Actualizar, Borrar) para cada modelo clave: Ecosistemas, Usuarios, Roles, secuencias de Trabajo, Estados y, fundamentalmente, Transiciones.
+Esta interfaz debe ser muy visual e intuitiva, permitiendo a un administrador crear un secuencia completo seleccionando estados y roles de listas desplegables.
+3. Cargar el secuencia Inicial (Base de Datos):
+Usando el panel de administración recién creado, configura el primer "Ecosistema" y mapea el secuencia de trabajo actual (el que describiste: Agente -> Revisor -> Firmante -> Agente).
 
 Fase 4: Migración de Datos y Despliegue
 
@@ -196,32 +196,32 @@ Una vez completadas estas fases, tendrás el backend y la administración comple
 ---
 
 🗃️ Fase 1: Construcción del Esquema de la Base de Datos
-Hito 1.1: Generar las migraciones para las tablas principales ejecutando los comandos php artisan make:migration para: roles, ecosistemas, flujos_trabajo, estados, actuaciones, transiciones, historial_actuaciones, permisos_lectura, ecosistema_administrador.
-Hito 1.2: Definir la estructura de columnas y relaciones (foreign keys) en el archivo de migración de actuaciones (incluyendo estado_id, asignado_id, flujo_trabajo_id).
+Hito 1.1: Generar las migraciones para las tablas principales ejecutando los comandos php artisan make:migration para: roles, ecosistemas, secuencias_trabajo, estados, actuaciones, transiciones, historial_actuaciones, permisos_lectura, ecosistema_administrador.
+Hito 1.2: Definir la estructura de columnas y relaciones (foreign keys) en el archivo de migración de actuaciones (incluyendo estado_id, asignado_id, secuencia_trabajo_id).
 Hito 1.3: Definir la estructura de columnas y relaciones en el resto de archivos de migración (siguiendo el diseño acordado).
 Hito 1.4: Ejecutar todas las migraciones con php artisan migrate y verificar que todas las tablas se crearon correctamente en la base de datos actuaciones_db.
-Hito 1.5: Generar los modelos Eloquent para cada tabla (Rol, Ecosistema, FlujoTrabajo, Estado, Actuacion, Transicion, HistorialActuacion, PermisoLectura, EcosistemaAdministrador) usando php artisan make:model.
+Hito 1.5: Generar los modelos Eloquent para cada tabla (Rol, Ecosistema, secuenciaTrabajo, Estado, Actuacion, Transicion, HistorialActuacion, PermisoLectura, EcosistemaAdministrador) usando php artisan make:model.
 Hito 1.6: Definir las relaciones Eloquent (belongsTo, hasMany, belongsToMany, etc.) dentro de cada modelo.
 ⚙️ Fase 2: Lógica de Negocio y Autenticación
 Hito 2.1: Instalar y configurar Laravel Sanctum para autenticación de API: composer require laravel/sanctum y seguir los pasos de configuración oficial.
-Hito 2.2: Crear la carpeta app/Services y dentro, el archivo ServicioFlujoTrabajo.php.
-Hito 2.3: Implementar el método realizarTransicion() en ServicioFlujoTrabajo.php con la lógica de validación de roles, campos obligatorios y cambio de estado.
+Hito 2.2: Crear la carpeta app/Services y dentro, el archivo ServiciosecuenciaTrabajo.php.
+Hito 2.3: Implementar el método realizarTransicion() en ServiciosecuenciaTrabajo.php con la lógica de validación de roles, campos obligatorios y cambio de estado.
 Hito 2.4: Definir las rutas API en routes/api.php para gestionar actuaciones (GET, POST, PUT, DELETE).
 Hito 2.5: Crear el controlador Api/ActuacionController con php artisan make:controller Api/ActuacionController --api.
 Hito 2.6: Implementar los métodos del controlador (index, store, show, update, destroy) para interactuar con el servicio y devolver respuestas JSON.
 Hito 2.7: Crear una ruta y un controlador para la página "Selector de Rol" (ej: RoleSelectionController).
-Hito 2.8: Modificar el flujo de login para que, tras autenticar, redirija al usuario a la página principal si tiene un solo rol, o al selector de rol si tiene múltiples roles.
+Hito 2.8: Modificar el secuencia de login para que, tras autenticar, redirija al usuario a la página principal si tiene un solo rol, o al selector de rol si tiene múltiples roles.
 🖥️ Fase 3: Panel de Administración
 Hito 3.1: Elegir e instalar una herramienta de administración (Filament o Laravel Nova) siguiendo su guía oficial de instalación.
 Hito 3.2: Crear el recurso de administración para Ecosistema (CRUD completo).
 Hito 3.3: Crear el recurso de administración para Rol (CRUD completo).
-Hito 3.4: Crear el recurso de administración para FlujoTrabajo (CRUD completo).
+Hito 3.4: Crear el recurso de administración para secuenciaTrabajo (CRUD completo).
 Hito 3.5: Crear el recurso de administración para Estado (CRUD completo).
 Hito 3.6: Crear el recurso de administración para Transicion, con una interfaz visual que permita seleccionar el estado origen, destino y el rol responsable desde listas desplegables.
 Hito 3.7: Crear el recurso de administración para Usuario (gestión de roles y asignación a ecosistemas).
 Hito 3.8: Crear el recurso de administración para EcosistemaAdministrador (asignar administradores a ecosistemas).
 Hito 3.9: Usar el panel de administración para crear el primer ecosistema de prueba (ej: "Recursos Humanos").
-Hito 3.10: Configurar el primer flujo de trabajo en el panel (ej: "Solicitud de Vacaciones": Agente → Revisor → Firmante → Agente).
+Hito 3.10: Configurar el primer secuencia de trabajo en el panel (ej: "Solicitud de Vacaciones": Agente → Revisor → Firmante → Agente).
 🔄 Fase 4: Migración de Datos y Despliegue
 Hito 4.1: Crear un comando Artisan personalizado: php artisan make:command MigrarDatosSheets.
 Hito 4.2: Implementar la lógica en el comando MigrarDatosSheets para leer un archivo CSV y mapear sus datos a los modelos Eloquent, insertándolos en la base de datos.

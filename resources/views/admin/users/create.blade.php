@@ -14,8 +14,8 @@
             @include('admin.users._form')
 
             <div class="mt-4 flex gap-2 justify-end">
-                <flux:button type="submit" variant="primary">Crear</flux:button>
-                <flux:button :href="route('admin.users.index')">Cancelar</flux:button>
+                <flux:button type="submit" variant="primary" size="sm">Crear</flux:button>
+                <flux:button :href="route('admin.users.index')" size="sm">Cancelar</flux:button>
             </div>
         </form>
     </div>

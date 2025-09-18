@@ -37,14 +37,13 @@ class AdminPermissionsSeeder extends Seeder
 
                 // Flows design
                 ['name' => 'ecosystem.flows.types', 'guard_name' => 'web'],
-                ['name' => 'ecosystem.flows.designer', 'guard_name' => 'web'],
+                ['name' => 'Diseñador de Secuencias', 'guard_name' => 'web'],
                 ['name' => 'ecosystem.flows.states', 'guard_name' => 'web'],
                 ['name' => 'ecosystem.flows.transitions', 'guard_name' => 'web'],
 
                 // Team management
-                ['name' => 'ecosystem.team.assign_roles', 'guard_name' => 'web'],
-                ['name' => 'ecosystem.team.list', 'guard_name' => 'web'],
-                ['name' => 'ecosystem.team.invite', 'guard_name' => 'web'],
+                ['name' => 'Roles y Permisos del Ecosistema', 'guard_name' => 'web'],
+                ['name' => 'Usuarios del Ecosistema', 'guard_name' => 'web'],
             ];
 
             foreach ($permissionSlugs as $perm) {

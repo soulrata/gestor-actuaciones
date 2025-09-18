@@ -6,17 +6,19 @@
             <flux:breadcrumbs.item>Ecosistemas</flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
-        <a href="{{ route('admin.ecosistema.create') }}" class="btn btn-blue text-xs">Nuevo Ecosistema</a>
+        <flux:button :href="route('admin.ecosistema.create')" variant="primary" size="sm">
+            Nuevo Ecosistema
+        </flux:button>
     </div>
 
-    <div class="relative overflow-x-auto mt-4 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-700 rounded-lg p-2">
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th class="px-6 py-3">ID</th>
                     <th class="px-6 py-3">Nombre</th>
                     <th class="px-6 py-3">Descripción</th>
-                    <th class="px-6 py-3">Acción</th>
+                    <th class="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,14 +27,23 @@
                         <td class="px-6 py-4">{{ $e->id }}</td>
                         <td class="px-6 py-4">{{ $e->nombre }}</td>
                         <td class="px-6 py-4">{{ Str::limit($e->descripcion, 80) }}</td>
-                        <td class="px-6 py-4 flex gap-2">
-                            <a href="{{ route('admin.ecosistema.show', $e) }}" class="btn btn-gray text-xs dark:bg-zinc-700 dark:text-white">Ver</a>
-                            <a href="{{ route('admin.ecosistema.edit', $e) }}" class="btn btn-blue text-xs dark:bg-blue-600 dark:text-white">Editar</a>
-                            <form action="{{ route('admin.ecosistema.destroy', $e) }}" method="POST" onsubmit="return confirm('¿Confirma eliminar este ecosistema?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-red text-xs dark:bg-red-600 dark:text-white">Eliminar</button>
-                            </form>
+                        <td class="px-6 py-4">
+                            <div class="flex gap-2">
+                                <flux:button :href="route('admin.ecosistema.show', $e)" variant="outline" size="sm">
+                                    Ver
+                                </flux:button>
+                                <flux:button :href="route('admin.ecosistema.edit', $e)" variant="primary" size="sm">
+                                    Editar
+                                </flux:button>
+                                <form action="{{ route('admin.ecosistema.destroy', $e) }}" method="POST" 
+                                      onsubmit="return confirm('¿Confirma eliminar este ecosistema?');" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <flux:button type="submit" variant="danger" size="sm">
+                                        Eliminar
+                                    </flux:button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

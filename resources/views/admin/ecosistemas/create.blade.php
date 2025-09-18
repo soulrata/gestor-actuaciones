@@ -7,25 +7,39 @@
         </flux:breadcrumbs>
     </div>
 
-    <form action="{{ route('admin.ecosistema.store') }}" method="POST">
-        @csrf
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <flux:heading size="lg" class="mb-6">Crear Nuevo Ecosistema</flux:heading>
+        
+        <form action="{{ route('admin.ecosistema.store') }}" method="POST" class="space-y-6">
+            @csrf
 
-        <div class="grid gap-4">
-            <div>
-                <label class="block text-sm font-medium">Nombre</label>
-                <input type="text" name="nombre" value="{{ old('nombre') }}" class="input" required />
-                @error('nombre')<p class="text-red-500 text-xs">{{ $message }}</p>@enderror
-            </div>
+            <flux:field>
+                <flux:label>Nombre</flux:label>
+                <flux:input 
+                    name="nombre" 
+                    value="{{ old('nombre') }}" 
+                    required 
+                />
+                <flux:error name="nombre" />
+            </flux:field>
 
-            <div>
-                <label class="block text-sm font-medium">Descripción</label>
-                <textarea name="descripcion" class="input h-24">{{ old('descripcion') }}</textarea>
-                @error('descripcion')<p class="text-red-500 text-xs">{{ $message }}</p>@enderror
-            </div>
+            <flux:field>
+                <flux:label>Descripción</flux:label>
+                <flux:textarea 
+                    name="descripcion" 
+                    rows="4"
+                >{{ old('descripcion') }}</flux:textarea>
+                <flux:error name="descripcion" />
+            </flux:field>
 
-            <div>
-                <button class="btn btn-blue">Crear Ecosistema</button>
+            <div class="flex gap-2 justify-end border-gray-200 dark:border-gray-700">
+                <flux:button :href="route('admin.ecosistema.index')" variant="outline" size="sm">
+                    Cancelar
+                </flux:button>
+                <flux:button type="submit" variant="primary" size="sm">
+                    Crear Ecosistema
+                </flux:button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </x-layouts.app>
