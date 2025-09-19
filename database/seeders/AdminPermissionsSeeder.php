@@ -36,7 +36,7 @@ class AdminPermissionsSeeder extends Seeder
                 ['name' => 'ecosystem.tracking.reports', 'guard_name' => 'web'],
 
                 // Flows design
-                ['name' => 'ecosystem.flows.types', 'guard_name' => 'web'],
+                ['name' => 'Gestor de estados', 'guard_name' => 'web'],
                 ['name' => 'Diseñador de Secuencias', 'guard_name' => 'web'],
                 ['name' => 'ecosystem.flows.states', 'guard_name' => 'web'],
                 ['name' => 'ecosystem.flows.transitions', 'guard_name' => 'web'],

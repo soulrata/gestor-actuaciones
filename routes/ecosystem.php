@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EcosystemUserController;
 use App\Http\Controllers\EcosystemRoleController;
+use App\Http\Controllers\EcosystemEstadoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +29,8 @@ Route::middleware(['auth'])->prefix('ecosystem')->name('ecosystem.')->group(func
     // Gestión de roles del ecosistema  
     Route::resource('roles', EcosystemRoleController::class)
         ->middleware('can:Roles y Permisos del Ecosistema');
+
+    // Gestión de estados del ecosistema
+    Route::resource('estados', EcosystemEstadoController::class)
+        ->middleware('can:Gestor de estados');
 });

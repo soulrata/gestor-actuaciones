@@ -87,18 +87,32 @@
         // 🛠️ Diseño de Secuencias
         'Diseño de Secuencias' => [
             [
-                'name' => 'Tipos de Actuación',
-                'icon' => 'table-cells',
-                'routes' => '#',
-                'current' => false,
-                'can' => 'ecosystem.flows.types',
-            ],
-            [
                 'name' => 'Diseñador de Secuencias',
                 'icon' => 'puzzle-piece',
                 'routes' => '#',
                 'current' => false,
                 'can' => 'Diseñador de Secuencias',
+            ],
+            [
+                'name' => 'Gestor de estados',
+                'icon' => 'rectangle-stack',
+                'routes' => route('ecosystem.estados.index'),
+                'current' => request()->routeIs('ecosystem.estados.*'),
+                'can' => 'Gestor de estados',
+            ],
+            [
+                'name' => 'Categoría de Actuación',
+                'icon' => 'rectangle-stack',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.states',
+            ], 
+            [
+                'name' => 'Tipos de Actuación',
+                'icon' => 'table-cells',
+                'routes' => '#',
+                'current' => false,
+                'can' => 'ecosystem.flows.types',
             ],
             [
                 'name' => 'Gestor de Estados',

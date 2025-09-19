@@ -16,6 +16,7 @@ class RoutePermissionsSeeder extends Seeder
             'Diseñador de Secuencias',
             'Usuarios del Ecosistema',
             'Roles y Permisos del Ecosistema',
+            'Gestor de estados',
         ];
 
         foreach ($perms as $p) {
