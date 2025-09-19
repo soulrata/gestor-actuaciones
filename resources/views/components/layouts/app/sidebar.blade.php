@@ -89,8 +89,8 @@
             [
                 'name' => 'Diseñador de Secuencias',
                 'icon' => 'puzzle-piece',
-                'routes' => '#',
-                'current' => false,
+                'routes' => route('ecosystem.secuencias.index'),
+                'current' => request()->routeIs('ecosystem.secuencias.*'),
                 'can' => 'Diseñador de Secuencias',
             ],
             [

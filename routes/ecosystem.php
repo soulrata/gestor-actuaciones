@@ -3,6 +3,7 @@
 use App\Http\Controllers\EcosystemUserController;
 use App\Http\Controllers\EcosystemRoleController;
 use App\Http\Controllers\EcosystemEstadoController;
+use App\Http\Controllers\EcosystemSecuenciaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,8 @@ Route::middleware(['auth'])->prefix('ecosystem')->name('ecosystem.')->group(func
     // Gestión de estados del ecosistema
     Route::resource('estados', EcosystemEstadoController::class)
         ->middleware('can:Gestor de estados');
+
+    // Gestión de secuencias del ecosistema
+    Route::resource('secuencias', EcosystemSecuenciaController::class)
+        ->middleware('can:Diseñador de Secuencias');
 });
